@@ -64,3 +64,34 @@ English.
 Hindi.
 Spanish.
 Arabic.
+
+Country Report
+
+A country report requires the following columns:
+Code.
+Name.
+Continent.
+Region.
+Population.
+Capital.
+
+
+City Report
+A city report requires the following columns:
+Name.
+Country.
+District.
+Population.
+
+Capital City Report
+A capital city report requires the following columns:
+Name.
+Country.
+Population.
+
+Population Report
+For the population reports, the following information is requested:
+The name of the continent/region/country.
+The total population of the continent/region/country.
+The total population of the continent/region/country living in cities (including a %).
+The total population of the continent/region/country not living in cities (including a %).
