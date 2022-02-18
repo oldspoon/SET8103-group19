@@ -15,5 +15,5 @@ jobs:
           distribution: 'adopt'
       - name: Compile with Maven
         run: mvn compile
-      - name: Run docker compose
+      - name: Run docker package
         run: docker-compose up --abort-on-container-exit
