@@ -23,6 +23,6 @@ public class City {
     /**
      * the population of the city
      */
-    public int population;
+    public int city_population;
 
 }
