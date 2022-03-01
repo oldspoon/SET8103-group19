@@ -87,7 +87,12 @@ public class App
 
 
     }
-
+    /**
+     * This is the method used to return an array list of Countries by specified region.
+     * Dependant on the SQL used in the method.
+     *
+     * @return ArrayList<Country> List of Countries
+     */
     public ArrayList<Country> getCountryByRegion()
     {
         try{
@@ -123,6 +128,11 @@ public class App
         }
 
     }
+
+    /**
+     * This is a method used to print out the List of Countries
+     *
+     */
     public void printCountries (ArrayList<Country> country) {
         // Check countries is not null
         if (country == null)
@@ -131,15 +141,15 @@ public class App
             return;
         }
 
-        // Print header
-        System.out.printf("%-40s %-40s %-40s %-40s %-40s %-40s%n", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        // Print first row
+        System.out.printf("%-30s %-30s %-30s %-30s %-30s %-30s%n", "Code", "Name", "Continent", "Region", "Population", "Capital");
         // Loop over all countries in the list
         for (Country cnt : country)
         {
             if (cnt == null)
                 continue;
             String cnt_string =
-                    String.format("%-40s %-40s %-40s %-40s %-40s %-40s",
+                    String.format("%-30s %-30s %-30s %-30s %-30s %-30s",
                             cnt.getCode(), cnt.getName(), cnt.getContinent(), cnt.getRegion(), cnt.getPopulation(), cnt.getCapital());
             System.out.println(cnt_string);
         }
