@@ -79,7 +79,10 @@ public class App
         // Connect to database
         a.connect();
 
-        ArrayList<Country> country = a.getCountryByRegion();
+        //ArrayList<Country> country = a.getCountryByRegion();
+        String N;
+
+        ArrayList<Country> country = a.getCountryTopNPop("10");
         a.printCountries(country);
 
         // Disconnect from database
@@ -152,6 +155,53 @@ public class App
                     String.format("%-30s %-30s %-30s %-30s %-30s %-30s",
                             cnt.getCode(), cnt.getName(), cnt.getContinent(), cnt.getRegion(), cnt.getPopulation(), cnt.getCapital());
             System.out.println(cnt_string);
+        }
+    }
+
+    /**
+     * This is the method used to return an array list of top N Countries order by highest to lowest population.
+     * Dependant on the SQL used in the method.
+     *
+     * @return ArrayList<Country> List of Countries
+     */
+    public ArrayList<Country> getCountryTopNPop(String n)
+    {
+        try
+        {
+            {
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
+                                + "FROM country "
+                                + "ORDER BY country.population DESC "
+                                + "LIMIT " + n ;
+
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Extract employee information
+                ArrayList<Country> country = new ArrayList<Country>();
+                while (rset.next())
+                {
+                    Country cnt = new Country();
+                    cnt.setCode(rset.getString("country.code"));
+                    cnt.setName(rset.getString("country.name"));
+                    cnt.setContinent(rset.getString("country.continent"));
+                    cnt.setRegion(rset.getString("country.region"));
+                    cnt.setPopulation(rset.getInt("country.population"));
+                    cnt.setCapital(rset.getString("country.capital"));
+                    country.add(cnt);
+                }
+                return country;
+
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
         }
     }
 }
