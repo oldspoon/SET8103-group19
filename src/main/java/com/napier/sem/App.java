@@ -79,10 +79,11 @@ public class App
         // Connect to database
         a.connect();
 
-        //ArrayList<Country> country = a.getCountryByRegion();
-        String N;
-
-        ArrayList<Country> country = a.getCountryTopNPop("10");
+        ArrayList<Country> country = a.getCountryByRegion();
+        //String N;
+        //System.out.println("How many countries: ");
+        //N = System.in.toString();
+        //ArrayList<Country> country = a.getCountryTopNPop(N);
         a.printCountries(country);
 
         // Disconnect from database
