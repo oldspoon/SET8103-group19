@@ -1,78 +1,171 @@
 package com.napier.sem;
 
 /**
- * This represents a country
- */
+ * Class representing a country
+ *
+ * @author Medárd Seff
+ * @version 1.0
+ * @since 2022-03-01
+ * */
 public class Country {
+
+    //properties
     /**
-     * 3 character country code
+     * Country code
+     * */
+    private String code;
+    /**
+     * Country name
+     * */
+    private String name;
+    /**
+     * Continent of the country;
      */
-    public String country_code;
+    private String continent;
+    /**
+     * Region of the country
+     */
+    private String region;
+    /**
+     * Country's population
+     */
+    private int population;
+    /**
+     * Capital of the country
+     */
+    private String capital;
+    //constructors
+    //Empty constructor
+    public Country() {}
 
     /**
-     * The name of the country
+     *Country constructor
+     * @param code Country's code
+     * @param name  Country's name
+     * @param continent Country's continent
+     * @param region Country's region
+     * @param population Country's population
+     * @param capital Country's capital
      */
-    public String country_name;
+    public Country(String code, String name, String continent, String region, int population, String capital) {
+        this.code = code;
+        this.name = name;
+        this.continent = continent;
+        this.region = region;
+        this.population = population;
+        this.capital = capital;
+    }
+    //getters and setters
 
     /**
-     * The continent it's located in
+     * gets code value
+     * @return code Country's code
      */
-    public String continent;
+    public String getCode() {
+        return code;
+    }
 
     /**
-     * The region it's located in
+     * sets code value
+     * @param code Country's code
      */
-    public String region;
+    public void setCode(String code){
+        this.code = code;
+    }
 
     /**
-     * Surface area of the country
+     * gets name value
+     * @return Country's name
      */
-    public float surface_area;
+    public String getName(){
+        return name;
+    }
 
     /**
-     * The independence year
+     * sets name value
+     * @param name Country's name
      */
-    public int indep_year;
+    public void  setName(String name){
+        this.name = name;
+
+    }
+    /**
+     * gets continent value
+     * @return continent Country's continent
+     */
+    public String getContinent() {
+        return continent;
+    }
 
     /**
-     * Population of the country
+     * sets continent value
+     * @param continent Country's continent
      */
-    public int country_population;
+    public void setContinent(String continent) {
+        this.continent = continent;
+    }
 
     /**
-     * Life expectancy in the country
+     * gets region value
+     * @return region Country's region
      */
-    public float life_expectancy;
+    public String getRegion() {
+        return region;
+    }
 
     /**
-     * Gross national product
+     * sets region value
+     * @param region Country's region
      */
-    public float gnp;
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
     /**
-     * old(?) gross national product
+     * gets population value
+     * @return population Country's population
      */
-    public float gnp_old;
+    public int getPopulation() {
+        return population;
+    }
 
     /**
-     * the local name of the country
+     * sets population value
+     * @param population Country's population
      */
-    public String local_name;
+    public void setPopulation(int population) {
+        this.population = population;
+    }
 
     /**
-     * The current head of state
+     * gets capital value
+     * @return capital Country's capital
      */
-    public String head_of_state;
+    public String getCapital() {
+        return capital;
+    }
 
     /**
-     * this is the city_id of the city that is the capital of the country
+     * sets capital value
+     * @param capital Country's capital
      */
-    public int capital;
+    public void setCapital(String capital) {
+        this.capital = capital;
+    }
 
     /**
-     * 2 character code
+     * To string method for Country Class
      */
-    public String code2;
-
+    @Override
+    public String toString() {
+        return "Country{" +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", continent='" + continent + '\'' +
+                ", region='" + region + '\'' +
+                ", population=" + population +
+                ", capital='" + capital + '\'' +
+                '}';
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class App
 {
@@ -78,8 +79,80 @@ public class App
         // Connect to database
         a.connect();
 
+        ArrayList<Country> country = a.getCountryByRegion();
+        a.printCountries(country);
+
         // Disconnect from database
         a.disconnect();
+
+
+    }
+    /**
+     * This is the method used to return an array list of Countries by specified region.
+     * Dependant on the SQL used in the method.
+     *
+     * @return ArrayList<Country> List of Countries
+     */
+    public ArrayList<Country> getCountryByRegion()
+    {
+        try{
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
+                            +"FROM country "
+                            +"WHERE country.Region ='Caribbean'"
+                            +"ORDER BY country.population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            ArrayList<Country> country = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country cntry = new Country();
+                cntry.setCode(rset.getString("country.code"));
+                cntry.setName(rset.getString("country.name"));
+                cntry.setContinent(rset.getString("country.continent"));
+                cntry.setRegion(rset.getString("country.region"));
+                cntry.setPopulation(rset.getInt("country.population"));
+                cntry.setCapital(rset.getString("country.capital"));
+                country.add(cntry);
+            }
+            return country;
+
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+
+    }
+
+    /**
+     * This is a method used to print out the List of Countries
+     *
+     */
+    public void printCountries (ArrayList<Country> country) {
+        // Check countries is not null
+        if (country == null)
+        {
+            System.out.println("No countries found");
+            return;
+        }
+
+        // Print first row
+        System.out.printf("%-30s %-30s %-30s %-30s %-30s %-30s%n", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        // Loop over all countries in the list
+        for (Country cnt : country)
+        {
+            if (cnt == null)
+                continue;
+            String cnt_string =
+                    String.format("%-30s %-30s %-30s %-30s %-30s %-30s",
+                            cnt.getCode(), cnt.getName(), cnt.getContinent(), cnt.getRegion(), cnt.getPopulation(), cnt.getCapital());
+            System.out.println(cnt_string);
+        }
     }
 }
 
