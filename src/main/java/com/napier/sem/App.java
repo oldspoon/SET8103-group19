@@ -86,13 +86,53 @@ public class App
         //ArrayList<Country> country = a.getCountryTopNPop(N);
 
         // Testing function - Matthew
-        ArrayList<Country> country = a.getCountriesInContinentOrderByPopulationDescending();
+        ArrayList<Country> country = a.getCountriesInWorldByPopulationDescending();
         a.printCountries(country);
 
         // Disconnect from database
         a.disconnect();
 
 
+    }
+
+    /**
+     * This function returns all countries in the world sorted by population descending
+     * @return arrayList of countries
+     * @author Matthew
+     */
+    public ArrayList<Country> getCountriesInWorldByPopulationDescending()
+    {
+        try{
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
+                            +"FROM country "
+                            +"ORDER BY country.population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<Country> countryList = new ArrayList<Country>();
+            while (rset.next())
+            {
+                Country c = new Country();
+                c.setCode(rset.getString("country.code"));
+                c.setName(rset.getString("country.name"));
+                c.setContinent(rset.getString("country.continent"));
+                c.setRegion(rset.getString("country.region"));
+                c.setPopulation(rset.getInt("country.population"));
+                c.setCapital(rset.getString("country.capital"));
+                countryList.add(c);
+            }
+            return countryList;
+
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
     }
 
     /**
