@@ -81,11 +81,17 @@ public class App
 
         ArrayList<Country> country = a.getCountryByRegion();
         ArrayList<Country> countryByContinent = a.Top5CountriesInAContinent("5", "Europe");
+        ArrayList<City> CitiesByPopulation = a.getCitiesOrderByPopulationDescending();
         //String N;
         //System.out.println("How many countries: ");
         //N = System.in.toString();
         //ArrayList<Country> country = a.getCountryTopNPop(N);
+        System.out.println("Full list of countries (by population Largest to smallest):");
         a.printCountries(country);
+        System.out.println("\n top 5 populated European Countries");
+        a.printCountries(countryByContinent);
+        System.out.println("\n Full list of Cities (by population Largest to smallest):");
+        a.printCities(CitiesByPopulation);
 
         // Disconnect from database
         a.disconnect();
@@ -174,6 +180,39 @@ public class App
         }
     }
 
+    public ArrayList<City> getCitiesOrderByPopulationDescending()
+    {
+        try{
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
+                            +"FROM city "
+                            +"ORDER BY city.Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityList = new ArrayList<City>();
+            while (rset.next())
+            {
+                City c = new City();
+                c.setId(rset.getInt("city.ID"));
+                c.setName(rset.getString("city.Name"));
+                c.setCountryCode(rset.getString("city.CountryCode"));
+                c.setDistrict(rset.getString("city.District"));
+                c.setPopulation(rset.getInt("city.Population"));
+                cityList.add(c);
+            }
+            return cityList;
+
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
 
 
     /**
@@ -241,6 +280,32 @@ public class App
                     String.format("%-30s %-30s %-30s %-30s %-30s %-30s",
                             cnt.getCode(), cnt.getName(), cnt.getContinent(), cnt.getRegion(), cnt.getPopulation(), cnt.getCapital());
             System.out.println(cnt_string);
+        }
+    }
+
+    /**
+     * This is a method used to print out the List of Cities
+     *
+     */
+    public void printCities (ArrayList<City> city) {
+        // Check countries is not null
+        if (city == null)
+        {
+            System.out.println("No cities found");
+            return;
+        }
+
+        // Print first row
+        System.out.printf("%-30s %-30s %-30s %-30s %-30s%n", "ID", "Name", "CountryCode", "District", "Population");
+        // Loop over all countries in the list
+        for (City c : city)
+        {
+            if (c == null)
+                continue;
+            String c_string =
+                    String.format("%-30s %-30s %-30s %-30s %-30s",
+                            c.getId(), c.getName(), c.getCountryCode(), c.getDistrict(), c.getPopulation());
+            System.out.println(c_string);
         }
     }
 
