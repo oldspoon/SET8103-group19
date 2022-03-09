@@ -7,20 +7,20 @@ public class CountryLanguage {
     /**
      * 3 character code, to link to country table
      */
-    public String country_code;
+    public String CountryCode;
 
     /**
      * The language they speak
      */
-    public String language;
+    public String Language;
 
     /**
      * T or F is it the official language of the country
      */
-    public char is_official;
+    public char IsOfficial;
 
     /**
-     * percentage of the poopulation speak it
+     * percentage of the population speak it
      */
-    public float percentage;
+    public float Percentage;
 }
