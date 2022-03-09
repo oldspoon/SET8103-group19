@@ -3,8 +3,7 @@ package com.napier.sem;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class App
-{
+public class App {
     /**
      * Connection to MySQL database.
      */
@@ -13,39 +12,29 @@ public class App
     /**
      * Connect to the MySQL database.
      */
-    public void connect()
-    {
-        try
-        {
+    public void connect() {
+        try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
         int retries = 10;
-        for (int i = 0; i < retries; ++i)
-        {
+        for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
-            try
-            {
+            try {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
-            }
-            catch (SQLException sqle)
-            {
+            } catch (SQLException sqle) {
                 System.out.println("Failed to connect to database attempt " + Integer.toString(i));
                 System.out.println(sqle.getMessage());
-            }
-            catch (InterruptedException ie)
-            {
+            } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
@@ -54,25 +43,19 @@ public class App
     /**
      * Disconnect from the MySQL database.
      */
-    public void disconnect()
-    {
-        if (con != null)
-        {
-            try
-            {
+    public void disconnect() {
+        if (con != null) {
+            try {
                 // Close connection
                 con.close();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println("Error closing connection to database");
             }
         }
     }
 
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         // Create new Application
         App a = new App();
 
@@ -80,39 +63,41 @@ public class App
         a.connect();
 
         ArrayList<Country> country = a.getCountryByRegion();
+        ArrayList<Country> countryByContinent = a.Top5CountriesInAContinent("5", "Europe");
         //String N;
         //System.out.println("How many countries: ");
         //N = System.in.toString();
         //ArrayList<Country> country = a.getCountryTopNPop(N);
         a.printCountries(country);
+        a.printCountries(countryByContinent);
+
 
         // Disconnect from database
         a.disconnect();
 
 
     }
+
     /**
      * This is the method used to return an array list of Countries by specified region.
      * Dependant on the SQL used in the method.
      *
      * @return ArrayList<Country> List of Countries
      */
-    public ArrayList<Country> getCountryByRegion()
-    {
-        try{
+    public ArrayList<Country> getCountryByRegion() {
+        try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
                     "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
-                            +"FROM country "
-                            +"WHERE country.Region ='Caribbean'"
-                            +"ORDER BY country.population DESC";
+                            + "FROM country "
+                            + "WHERE country.Region ='Caribbean'"
+                            + "ORDER BY country.population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             ArrayList<Country> country = new ArrayList<Country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 Country cntry = new Country();
                 cntry.setCode(rset.getString("country.code"));
                 cntry.setName(rset.getString("country.name"));
@@ -124,8 +109,7 @@ public class App
             }
             return country;
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get country details");
             return null;
@@ -135,12 +119,10 @@ public class App
 
     /**
      * This is a method used to print out the List of Countries
-     *
      */
-    public void printCountries (ArrayList<Country> country) {
+    public void printCountries(ArrayList<Country> country) {
         // Check countries is not null
-        if (country == null)
-        {
+        if (country == null) {
             System.out.println("No countries found");
             return;
         }
@@ -148,8 +130,7 @@ public class App
         // Print first row
         System.out.printf("%-30s %-30s %-30s %-30s %-30s %-30s%n", "Code", "Name", "Continent", "Region", "Population", "Capital");
         // Loop over all countries in the list
-        for (Country cnt : country)
-        {
+        for (Country cnt : country) {
             if (cnt == null)
                 continue;
             String cnt_string =
@@ -165,10 +146,8 @@ public class App
      *
      * @return ArrayList<Country> List of Countries
      */
-    public ArrayList<Country> getCountryTopNPop(String n)
-    {
-        try
-        {
+    public ArrayList<Country> getCountryTopNPop(String n) {
+        try {
             {
                 // Create an SQL statement
                 Statement stmt = con.createStatement();
@@ -177,14 +156,13 @@ public class App
                         "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
                                 + "FROM country "
                                 + "ORDER BY country.population DESC "
-                                + "LIMIT " + n ;
+                                + "LIMIT " + n;
 
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
                 // Extract employee information
                 ArrayList<Country> country = new ArrayList<Country>();
-                while (rset.next())
-                {
+                while (rset.next()) {
                     Country cnt = new Country();
                     cnt.setCode(rset.getString("country.code"));
                     cnt.setName(rset.getString("country.name"));
@@ -197,13 +175,48 @@ public class App
                 return country;
 
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
         }
-        catch (Exception e)
-        {
+    }
+
+    public ArrayList<Country> Top5CountriesInAContinent(String n, String c) {
+        try {
+            {
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
+                                +"FROM country "
+                                +"WHERE country.Continent ='" + c + "'"
+                                +"ORDER BY country.population DESC "
+                                +"LIMIT " + n;
+
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Extract employee information
+                ArrayList<Country> country = new ArrayList<Country>();
+                while (rset.next()) {
+                    Country cnt = new Country();
+                    cnt.setCode(rset.getString("country.code"));
+                    cnt.setName(rset.getString("country.name"));
+                    cnt.setContinent(rset.getString("country.continent"));
+                    cnt.setRegion(rset.getString("country.region"));
+                    cnt.setPopulation(rset.getInt("country.population"));
+                    cnt.setCapital(rset.getString("country.capital"));
+                    country.add(cnt);
+                }
+                return country;
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get country details");
             return null;
         }
     }
 }
+
 
