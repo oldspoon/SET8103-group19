@@ -79,14 +79,12 @@ public class App
         // Connect to database
         a.connect();
 
-        //ArrayList<Country> country = a.getCountryByRegion();
+        ArrayList<Country> country = a.getCountryByRegion();
+        ArrayList<Country> countryByContinent = a.Top5CountriesInAContinent("5", "Europe");
         //String N;
         //System.out.println("How many countries: ");
         //N = System.in.toString();
         //ArrayList<Country> country = a.getCountryTopNPop(N);
-
-        // Testing function - Matthew
-        ArrayList<Country> country = a.getCountriesInWorldByPopulationDescending();
         a.printCountries(country);
 
         // Disconnect from database
@@ -284,9 +282,43 @@ public class App
                 return country;
 
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
         }
-        catch (Exception e)
-        {
+    }
+
+    public ArrayList<Country> Top5CountriesInAContinent(String n, String c) {
+        try {
+            {
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
+                                +"FROM country "
+                                +"WHERE country.Continent ='" + c + "'"
+                                +"ORDER BY country.population DESC "
+                                +"LIMIT " + n;
+
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Extract employee information
+                ArrayList<Country> country = new ArrayList<Country>();
+                while (rset.next()) {
+                    Country cnt = new Country();
+                    cnt.setCode(rset.getString("country.code"));
+                    cnt.setName(rset.getString("country.name"));
+                    cnt.setContinent(rset.getString("country.continent"));
+                    cnt.setRegion(rset.getString("country.region"));
+                    cnt.setPopulation(rset.getInt("country.population"));
+                    cnt.setCapital(rset.getString("country.capital"));
+                    country.add(cnt);
+                }
+                return country;
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get country details");
             return null;
