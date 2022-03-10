@@ -180,6 +180,10 @@ public class App
         }
     }
 
+    /**
+     * This function returns an arraylist of all cities in the world, ordered by population descending
+     * @return An ArrayList of cities
+     */
     public ArrayList<City> getCitiesOrderByPopulationDescending()
     {
         try{
@@ -354,6 +358,12 @@ public class App
         }
     }
 
+    /**
+     * This function takes in a number N and a string C to list the top N countries in continent N
+     * @param n
+     * @param c
+     * @return arraylist of countries
+     */
     public ArrayList<Country> Top5CountriesInAContinent(String n, String c) {
         try {
             {
