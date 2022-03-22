@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-All the countries in the world organised by largest population to smallest.
+We want to **produce a report on all the countries in the world organised by largest population to smallest.**
 
 ### Scope
 
