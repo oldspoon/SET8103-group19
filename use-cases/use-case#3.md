@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-All the countries in a continent organised by largest population to smallest.
+we want to **produce a report on all the countries in a continent organised by largest population to smallest.**
 
 ### Scope
 
@@ -16,7 +16,7 @@ Primary task.
 
 ### Preconditions
 
-Database contains country and continent data
+Database contains country data and has all continent fields in country table filled
 
 ### Success End Condition
 
