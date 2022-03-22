@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-All the countries in a region organised by largest population to smallest.
+We want to **produce a report on all the countries in a region organised by largest population to smallest.**
 
 ### Scope
 
@@ -16,7 +16,7 @@ Primary task.
 
 ### Preconditions
 
-Database contains country and region data.
+Database contains country data and has all region in country table fields filled
 
 ### Success End Condition
 
