@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-A list of all cities in the world organised by largest population to smallest.
+We want to **produce a report on all cities in the world organised by largest population to smallest.
 
 ### Scope
 
@@ -16,7 +16,7 @@ Primary task.
 
 ### Preconditions
 
-Database contains city and population data.
+Database contains city data and population field filled.
 
 ### Success End Condition
 
