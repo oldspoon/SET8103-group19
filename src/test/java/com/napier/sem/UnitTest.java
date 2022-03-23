@@ -30,7 +30,7 @@ public class UnitTest
     }
     @Test
     void getCountryByRegionTest(){
-        String n = "'Carribean'"
+        String n = "'Carribean'";
         app.getCountryByRegion(n);
     }
     @Test
