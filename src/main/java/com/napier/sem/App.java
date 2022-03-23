@@ -70,7 +70,10 @@ public class App
         }
     }
 
-
+    /**
+     * Main function that creates an app, connects to the db and calls various functions
+     * @param args
+     */
     public static void main(String[] args)
     {
         // Create new Application
