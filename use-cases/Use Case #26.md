@@ -1,10 +1,10 @@
-# USE CASE: 21 The top N populated capital cities in the world where N is provided by the user.
+# USE CASE: 23 generate a report that contains the population of various groups
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-We want to **produce a report on the top N populated capital cities in the world where N is provided by the user.**
+We want to **generate a report that contains the population of various groups**
 
 ### Scope
 
@@ -16,7 +16,7 @@ Primary task.
 
 ### Preconditions
 
-Database contains city data and country data.
+Database contains city data, country data and has city and country population fields filled.
 
 ### Success End Condition
 
@@ -36,10 +36,9 @@ A request for information is sent.
 
 ## MAIN SUCCESS SCENARIO
 
-1. Request city information, Supply N.
-2. Extracts current information of all cities in the database where the city is a countrys capital city.
-3. Limit responses to N.
-4. Report produced.
+1. Request list.
+2. Extract list
+3. Produce list.
 
 ## EXTENSIONS
 
