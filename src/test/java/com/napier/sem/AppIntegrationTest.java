@@ -1,4 +1,3 @@
-/*
 package com.napier.sem;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -30,5 +29,20 @@ public class AppIntegrationTest
      //   assertEquals(emp.first_name, "Ronghao");
       //  assertEquals(emp.last_name, "Garigliano");
     }
+
+    @Test
+    void testGetCitiesInRegionDesc(){
+        ArrayList<City> city = app.getCitiesInRegionDesc();
+        for(City c : city){
+        c.toString();
+        }
+    }
+    @Test
+    void testGetCountriesInWorldByPopulationDescending(){
+        ArrayList<Country> country = app.getCountriesInWorldByPopulationDescending();
+        for (Country m:country) {
+            m.toString();
+        }
+        country.toString();
+    }
 }
-*/
