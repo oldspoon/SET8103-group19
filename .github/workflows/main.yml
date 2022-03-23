@@ -37,11 +37,11 @@ jobs:
       - name: Integration Tests
         run: |
           docker build -t database ./db 
-          docker run --name db3306 -dp 33061:3306 database
+          docker run --name world -dp 33061:3306 database
           mvn -Dtest=com.napier.sem.AppIntegrationTest test
-          docker stop db3306
-          docker rm db3306
-          docker image rm db3306
+          docker stop world
+          docker rm world
+          docker image rm world
   build:
     name: Build and Start Using docker-compose
     runs-on: ubuntu-20.04
