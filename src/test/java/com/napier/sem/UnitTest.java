@@ -24,5 +24,40 @@ public class UnitTest
         app.printCities(null);
     }
 
+    @Test
+    void printCountriesNull()
+    {
+        app.printCountries(null);
+    }
+
+    @Test
+    void printCountriesEmpty()
+    {
+        ArrayList<Country> countries = new ArrayList<Country>();
+        app.printCountries(countries);
+    }
+
+    @Test
+    void printCountriesContainsNull()
+    {
+        ArrayList<Country> countries = new ArrayList<Country>();
+        countries.add(null);
+        app.printCountries(countries);
+    }
+
+    @Test
+    void printCountries()
+    {
+        ArrayList<Country> countries = new ArrayList<Country>();
+        Country cnt = new Country();
+        cnt.setCode("CHN");
+        cnt.setName("China");
+        cnt.setContinent("Asia");
+        cnt.setRegion("Eastern Asia");
+        cnt.setPopulation(1277558000);
+        cnt.setCapital("1819");
+        countries.add(cnt);
+        app.printCountries(countries);
+    }
 
 }
