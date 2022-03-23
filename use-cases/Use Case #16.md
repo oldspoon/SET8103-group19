@@ -1,4 +1,4 @@
-# USE CASE: 10 The top N populated cities in a country where N is provided by the user.
+# USE CASE: 11 The top N populated cities in a country where N is provided by the user.
 
 ## CHARACTERISTIC INFORMATION
 
