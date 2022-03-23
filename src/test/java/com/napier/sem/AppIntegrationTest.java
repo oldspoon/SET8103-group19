@@ -23,11 +23,20 @@ public class AppIntegrationTest
     @Test
     void testGetCountryByRegion()
     {
-        app.getCountryByRegion("Eastern Europe");
 
-      //  assertEquals(emp.emp_no, 255530);
-     //   assertEquals(emp.first_name, "Ronghao");
-      //  assertEquals(emp.last_name, "Garigliano");
+       ArrayList<Country> countries =  app.getCountryByRegion("Eastern Europe");
+        assertEquals(countries.size(),10);
+        assertEquals(countries.get(0).getName(),"Russian Federation");
+        app.printCountries(countries);
+    }
+
+    @Test
+    void testGetCountriesInContinentOrderByPopulationDescending()
+    {
+        ArrayList<Country> countries = app.getCountriesInContinentOrderByPopulationDescending();
+        assertEquals(countries.size(),46);
+        assertEquals(countries.get(1).getName(),"Germany");
+        app.printCountries(countries);
     }
 
     @Test
