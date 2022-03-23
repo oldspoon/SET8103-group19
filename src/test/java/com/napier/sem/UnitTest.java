@@ -19,12 +19,6 @@ public class UnitTest
     }
 
     @Test
-    void printSalariesTestNull()
-    {
-        app.printCities(null);
-    }
-
-    @Test
     void printCountriesNull()
     {
         app.printCountries(null);
@@ -58,6 +52,41 @@ public class UnitTest
         cnt.setCapital("1819");
         countries.add(cnt);
         app.printCountries(countries);
+    }
+
+    @Test
+    void printCitiesTestNull()
+    {
+        app.printCities(null);
+    }
+
+    @Test
+    void printCitiesTestEmpty()
+    {
+        ArrayList<City> cities = new ArrayList<City>();
+        app.printCities(cities);
+    }
+
+    @Test
+    void printCitiesTestContainsNull()
+    {
+        ArrayList<City> cities = new ArrayList<City>();
+        cities.add(null);
+        app.printCities(cities);
+    }
+
+    @Test
+    void printCities()
+    {
+        ArrayList<City> cities = new ArrayList<City>();
+        City city = new City();
+        city.Name = "TestCity";
+        city.CountryCode="20D";
+        city.District="District 12";
+        city.Population=999;
+        city.ID=1;
+        cities.add(city);
+        app.printCities(cities);
     }
 
 }
