@@ -1,10 +1,10 @@
-# USE CASE: 15 The top N populated cities in a region where N is provided by the user.
+# USE CASE: 19 All the capital cities in a continent organised by largest population to smallest.
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-We want to **produce a report on the top N populated cities in a region where N is provided by the user.**
+We want to **produce a report on all the capital cities in a continent organised by largest population to smallest.**
 
 ### Scope
 
@@ -16,7 +16,7 @@ Primary task.
 
 ### Preconditions
 
-Database contains city data, country data and has city region field filled.
+Database contains city data, country data and has country region field filled.
 
 ### Success End Condition
 
@@ -37,9 +37,8 @@ A request for information is sent.
 ## MAIN SUCCESS SCENARIO
 
 1. Request city information.
-2. Extracts current information of all cities in the database where the country the city is in is in the specified region.
-3. limit responses to N
-4. Report produced.
+2. Extracts current information of all cities in the database where the city is a capital city, and the country fits the specified continent.
+3. Report produced.
 
 ## EXTENSIONS
 

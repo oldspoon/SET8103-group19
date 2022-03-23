@@ -1,10 +1,10 @@
-# USE CASE: 13 The top N populated cities in the world where N is provided by the user.
+# USE CASE: 20 All the capital cities in a region organised by largest to smallest.
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-We want to **produce a report on the top N populated cities in the world where N is provided by the user.**
+We want to **produce a report on all the capital cities in a region organised by largest to smallest.**
 
 ### Scope
 
@@ -36,10 +36,9 @@ A request for information is sent.
 
 ## MAIN SUCCESS SCENARIO
 
-1. Request city information, supply N.
-2. Extracts current information of all cities in the database.
-3. limit responses to N
-4. Report produced.
+1. Request city information.
+2. Extracts current information of all cities in the database where the city is a countrys capital city and is in a specific region.
+3. Report produced.
 
 ## EXTENSIONS
 
