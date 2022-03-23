@@ -42,17 +42,12 @@ public class AppIntegrationTest
     @Test
     void testGetCitiesInRegionDesc(){
         ArrayList<City> city = app.getCitiesInRegionDesc();
-        for(City c : city){
-        c.toString();
-        }
+        app.printCities(city);
     }
     @Test
     void testGetCountriesInWorldByPopulationDescending(){
         ArrayList<Country> country = app.getCountriesInWorldByPopulationDescending();
-        for (Country m:country) {
-            m.toString();
-        }
-        country.toString();
+        app.printCountries(country);
     }
     @Test
     void testTop5CountriesInAContinent(){
