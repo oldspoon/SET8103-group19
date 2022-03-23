@@ -54,4 +54,14 @@ public class AppIntegrationTest
         }
         country.toString();
     }
+    @Test
+    void testTop5CountriesInAContinent(){
+        ArrayList<Country> country = app.Top5CountriesInAContinent("5", "Europe");
+        app.printCountries(country);
+    }
+    @Test
+    void testTopNPop(){
+        ArrayList<Country> country = app.getCountryTopNPop("10");
+        app.printCountries(country);
+    }
 }
