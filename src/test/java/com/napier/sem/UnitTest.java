@@ -30,7 +30,8 @@ public class UnitTest
     }
     @Test
     void getCountryByRegionTest(){
-        app.getCountryByRegion('Carribean');
+        String n = "'Carribean'"
+        app.getCountryByRegion(n);
     }
     @Test
     void getCitiesOrderByPopulationDescendingTest(){
