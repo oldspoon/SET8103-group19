@@ -35,7 +35,7 @@ public class App
                 // Wait a bit for db to start
                 Thread.sleep(delay);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql:"+ location + "/world?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://"+ location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
@@ -85,7 +85,7 @@ public class App
         }else{
             a.connect("db3306",30000);
         }
-       // ArrayList<Country> country = a.getCountryByRegion();
+        ArrayList<Country> country = a.getCountryByRegion("Eastern Europe");
       //  ArrayList<Country> countryByContinent = a.Top5CountriesInAContinent("5", "Europe");
       //  ArrayList<City> CitiesByPopulation = a.getCitiesOrderByPopulationDescending();
         //String N;
@@ -98,9 +98,9 @@ public class App
        // a.printCountries(countryByContinent);
       //  System.out.println("\n Full list of Cities (by population Largest to smallest):");
         // a.printCities(CitiesByPopulation);
-        ArrayList<City> cities = a.getCitiesInRegionDesc();
-        a.printCities(cities);
-
+       // ArrayList<City> cities = a.getCitiesInRegionDesc();
+      //  a.printCities(cities);
+a.printCountries(country);
         // Disconnect from database
         a.disconnect();
 
