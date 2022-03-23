@@ -80,8 +80,11 @@ public class App
         App a = new App();
 
         // Connect to database
-        a.connect("localhost:33061",3000);
-
+        if(args.length < 1) {
+            a.connect("localhost:33061", 0);
+        }else{
+            a.connect("db3306",30000);
+        }
        // ArrayList<Country> country = a.getCountryByRegion();
       //  ArrayList<Country> countryByContinent = a.Top5CountriesInAContinent("5", "Europe");
       //  ArrayList<City> CitiesByPopulation = a.getCitiesOrderByPopulationDescending();
