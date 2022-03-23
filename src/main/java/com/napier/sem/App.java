@@ -82,25 +82,68 @@ public class App
         // Connect to database
         a.connect();
 
-        ArrayList<Country> country = a.getCountryByRegion();
-        ArrayList<Country> countryByContinent = a.Top5CountriesInAContinent("5", "Europe");
-        ArrayList<City> CitiesByPopulation = a.getCitiesOrderByPopulationDescending();
+       // ArrayList<Country> country = a.getCountryByRegion();
+      //  ArrayList<Country> countryByContinent = a.Top5CountriesInAContinent("5", "Europe");
+      //  ArrayList<City> CitiesByPopulation = a.getCitiesOrderByPopulationDescending();
         //String N;
         //System.out.println("How many countries: ");
         //N = System.in.toString();
         //ArrayList<Country> country = a.getCountryTopNPop(N);
-        System.out.println("Full list of countries (by population Largest to smallest):");
-        a.printCountries(country);
-        System.out.println("\n top 5 populated European Countries");
-        a.printCountries(countryByContinent);
-        System.out.println("\n Full list of Cities (by population Largest to smallest):");
-        a.printCities(CitiesByPopulation);
+      //  System.out.println("Full list of countries (by population Largest to smallest):");
+      //  a.printCountries(country);
+      //  System.out.println("\n top 5 populated European Countries");
+       // a.printCountries(countryByContinent);
+      //  System.out.println("\n Full list of Cities (by population Largest to smallest):");
+        // a.printCities(CitiesByPopulation);
+        ArrayList<City> cities = a.getCitiesInRegionDesc();
+        a.printCities(cities);
 
         // Disconnect from database
         a.disconnect();
 
 
     }
+
+    /**
+     * This function returns a list of cities in a certain region (example hardcoded is eastern europe)
+     * Ordered by city population descending
+     * @return arraylist of cities
+     */
+    public ArrayList<City> getCitiesInRegionDesc()
+    {
+        try{
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.ID,country.Region, city.Name,city.CountryCode, city.District,city.Population  "
+                            +"FROM city JOIN country ON (city.CountryCode=country.Code) "
+                            +"WHERE region = 'Eastern Europe' "
+                            +"ORDER BY city.Population desc ";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityList = new ArrayList<City>();
+            while (rset.next())
+            {
+                City c = new City();
+                c.setId(rset.getInt("city.ID"));
+                c.setName(rset.getString("city.Name"));
+                c.setCountryCode(rset.getString("city.CountryCode"));
+                c.setDistrict(rset.getString("city.District"));
+                c.setPopulation(rset.getInt("city.Population"));
+                cityList.add(c);
+            }
+            return cityList;
+
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
 
     /**
      * This function returns all countries in the world sorted by population descending
