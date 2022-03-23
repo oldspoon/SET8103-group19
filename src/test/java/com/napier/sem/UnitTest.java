@@ -23,4 +23,17 @@ public class UnitTest
     {
         app.printCities(null);
     }
+
+    @Test
+    void getCountryByRegionTestNull(){
+        app.getCountryByRegion(null);
+    }
+    @Test
+    void getCountryByRegionTest(){
+        app.getCountryByRegion('Carribean');
+    }
+    @Test
+    void getCitiesOrderByPopulationDescendingTest(){
+        app.getCitiesOrderByPopulationDescending();
+    }
 }

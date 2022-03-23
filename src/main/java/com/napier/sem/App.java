@@ -271,40 +271,42 @@ public class App
      *
      * @return ArrayList<Country> List of Countries
      */
-    public ArrayList<Country> getCountryByRegion()
+    public ArrayList<Country> getCountryByRegion(String n)
     {
-        try{
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
-                            +"FROM country "
-                            +"WHERE country.Region ='Caribbean'"
-                            +"ORDER BY country.population DESC";
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            ArrayList<Country> country = new ArrayList<Country>();
-            while (rset.next())
-            {
-                Country cntry = new Country();
-                cntry.setCode(rset.getString("country.code"));
-                cntry.setName(rset.getString("country.name"));
-                cntry.setContinent(rset.getString("country.continent"));
-                cntry.setRegion(rset.getString("country.region"));
-                cntry.setPopulation(rset.getInt("country.population"));
-                cntry.setCapital(rset.getString("country.capital"));
-                country.add(cntry);
-            }
-            return country;
-
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country details");
+        if (n == null){
             return null;
         }
+        else {
+            try {
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
+                                + "FROM country "
+                                + "WHERE country.Region ='" + n + "'"
+                                + "ORDER BY country.population DESC";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                ArrayList<Country> country = new ArrayList<Country>();
+                while (rset.next()) {
+                    Country cntry = new Country();
+                    cntry.setCode(rset.getString("country.code"));
+                    cntry.setName(rset.getString("country.name"));
+                    cntry.setContinent(rset.getString("country.continent"));
+                    cntry.setRegion(rset.getString("country.region"));
+                    cntry.setPopulation(rset.getInt("country.population"));
+                    cntry.setCapital(rset.getString("country.capital"));
+                    country.add(cntry);
+                }
+                return country;
 
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println("Failed to get country details");
+                return null;
+            }
+        }
     }
 
     /**
