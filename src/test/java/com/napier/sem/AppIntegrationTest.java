@@ -59,4 +59,9 @@ public class AppIntegrationTest
         ArrayList<Country> country = app.getCountryTopNPop("10");
         app.printCountries(country);
     }
+    @Test
+    void getCitiesOrderByPopulationDescending(){
+        ArrayList<City> city = app.getCitiesOrderByPopulationDescending();
+        app.printCities(city);
+    }
 }
