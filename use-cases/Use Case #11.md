@@ -1,10 +1,10 @@
-# USE CASE: 8 Produce a Report on all cities in the world by population.
+# USE CASE: 11 All the cities in a country organised by largest population to smallest.
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-We want to **produce a report on all cities in the world organised by largest population to smallest.
+We want to **produce a report on sll the cities in a country organised by largest population to smallest.**
 
 ### Scope
 
@@ -16,7 +16,7 @@ Primary task.
 
 ### Preconditions
 
-Database contains city data and population field filled.
+Database contains city data, country data.
 
 ### Success End Condition
 
@@ -37,7 +37,7 @@ A request for information is sent.
 ## MAIN SUCCESS SCENARIO
 
 1. Request city information.
-2. Extracts current information of all cities in the database.
+2. Extracts current information of all cities in the database which have a specified country.
 3. Report produced.
 
 ## EXTENSIONS
@@ -50,4 +50,4 @@ None.
 
 ## SCHEDULE
 
-**DUE DATE**: Release 0.2
+**DUE DATE**: Release 0.4

@@ -1,10 +1,10 @@
-# USE CASE 2: Product a report on all the countries in the world organised by largest population to smallest
+# USE CASE 7: Produce a report on the top N populated countries in a region where N is provided by the user.
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-We want to **produce a report on all the countries in the world organised by largest population to smallest.**
+We want to **Produce a report on the top N populated countries in a region where N is provided by the user.**
 
 ### Scope
 
@@ -16,7 +16,7 @@ Primary task.
 
 ### Preconditions
 
-Database contains country data
+Database contains country data and all region fields filled
 
 ### Success End Condition
 
@@ -38,7 +38,8 @@ A request for information is sent.
 
 1. Request country information of the entire database.
 2. Extracts current information of all countries and orders them by largest to smallest.
-3. Report produced.
+3. report limited to top N responses
+4. Report produced.
 
 ## EXTENSIONS
 

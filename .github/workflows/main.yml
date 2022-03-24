@@ -37,11 +37,11 @@ jobs:
       - name: Integration Tests
         run: |
           docker build -t database ./db 
-          docker run --name world -dp 33061:3306 database
+          docker run --name world -dp 33060:3306 database
           mvn -Dtest=com.napier.sem.AppIntegrationTest test
           docker stop world
           docker rm world
-          docker image rm world
+          docker image rm database
   build:
     name: Build and Start Using docker-compose
     runs-on: ubuntu-20.04
@@ -60,12 +60,3 @@ jobs:
           mvn package -DskipTests
           docker-compose up --abort-on-container-exit
        
-       
-       
-       
-       
-       
-       
-       
-       
-      

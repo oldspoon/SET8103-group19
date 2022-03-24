@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-The top N countries in a continent organised by largest population to smallest with a limit of N.
+We want to **produce a report on the top N countries in a continent organised by largest population to smallest with a limit of N.**
 
 ### Scope
 
@@ -38,7 +38,8 @@ A request for information is sent.
 
 1. Request country information on the continent, and supply the continent name and limit.
 2. Extracts current information of that number countries in the continent.
-3. Report produced.
+3. limit report to specified limit
+4. Report produced.
 
 ## EXTENSIONS
 
