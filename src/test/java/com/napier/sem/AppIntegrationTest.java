@@ -33,7 +33,7 @@ public class AppIntegrationTest
     @Test
     void testGetCountriesInContinentOrderByPopulationDescending()
     {
-        ArrayList<Country> countries = app.getCountriesInContinentOrderByPopulationDescending();
+        ArrayList<Country> countries = app.getCountriesInContinentOrderByPopulationDescending("Europe");
         assertEquals(countries.size(),46);
         assertEquals(countries.get(1).getName(),"Germany");
         app.printCountries(countries);
@@ -51,7 +51,7 @@ public class AppIntegrationTest
     }
     @Test
     void testTop5CountriesInAContinent(){
-        ArrayList<Country> country = app.Top5CountriesInAContinent("5", "Europe");
+        ArrayList<Country> country = app.TopNCountriesInAContinent("5", "Europe");
         app.printCountries(country);
     }
     @Test
@@ -63,5 +63,10 @@ public class AppIntegrationTest
     void getCitiesOrderByPopulationDescending(){
         ArrayList<City> city = app.getCitiesOrderByPopulationDescending();
         app.printCities(city);
+    }
+    @Test
+    void allCapitalCitiesInContinentByPopDESC(){
+        ArrayList<City> city = app.allCapitalCitiesInContinentByPopDESC("Europe");
+        assertEquals(city.get(0).getName(),"Moscow");
     }
 }

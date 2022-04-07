@@ -18,12 +18,18 @@ public class UnitTest
         app = new App();
     }
 
+    /**
+     * Test printCountries when passing null as parameter
+     */
     @Test
     void printCountriesNull()
     {
         app.printCountries(null);
     }
 
+    /**
+     * Test printCountries when passing an empty ArrayList as a parameter
+     */
     @Test
     void printCountriesEmpty()
     {
@@ -31,6 +37,9 @@ public class UnitTest
         app.printCountries(countries);
     }
 
+    /**
+     * Test printCountries when passing an ArrayList that contains a null as a parameter
+     */
     @Test
     void printCountriesContainsNull()
     {
@@ -39,6 +48,9 @@ public class UnitTest
         app.printCountries(countries);
     }
 
+    /**
+     * Test final printCountries to make sure it prints a normal ArrayList
+     */
     @Test
     void printCountries()
     {
@@ -54,12 +66,18 @@ public class UnitTest
         app.printCountries(countries);
     }
 
+    /**
+     * Test printCities when passing null as parameter
+     */
     @Test
     void printCitiesTestNull()
     {
         app.printCities(null);
     }
 
+    /**
+     * test printCities when passing an empty ArrayList as a parameter
+     */
     @Test
     void printCitiesTestEmpty()
     {
@@ -67,6 +85,9 @@ public class UnitTest
         app.printCities(cities);
     }
 
+    /**
+     * test printCities when passing an ArrayList containing null as a parameter
+     */
     @Test
     void printCitiesTestContainsNull()
     {
@@ -75,6 +96,9 @@ public class UnitTest
         app.printCities(cities);
     }
 
+    /**
+     * testing the final printCities with a normal ArrayList
+     */
     @Test
     void printCities()
     {
@@ -87,6 +111,51 @@ public class UnitTest
         city.ID=1;
         cities.add(city);
         app.printCities(cities);
+    }
+
+    /**
+     * Testing printCapitalCities passing null as parameter
+     */
+    @Test
+    void printCapitalCitiesNull()
+    {
+        app.printCapitalCities(null);
+    }
+
+    /**
+     * Testing printCapitalCities with an empty ArrayList
+     */
+    @Test
+    void printCapitalCitiesEmpty()
+    {
+        ArrayList<City> cities = new ArrayList<City>();
+        app.printCapitalCities(cities);
+    }
+
+    /**
+     * Testing printCapitalCities with an ArrayList containing null
+     */
+    @Test
+    void printCapitalCitiesContainsNull()
+    {
+        ArrayList<City> cities = new ArrayList<City>();
+        cities.add(null);
+        app.printCapitalCities(cities);
+    }
+
+    /**
+     * Testing printCapitalCities final ver
+     */
+    @Test
+    void printCapitalCities()
+    {
+        ArrayList<City> cities = new ArrayList<City>();
+        City city = new City();
+        city.Name = "Test Capital";
+        city.CountryCode="TES";
+        city.Population=20;
+        cities.add(city);
+        app.printCapitalCities(cities);
     }
 
 }
