@@ -41,7 +41,7 @@ public class AppIntegrationTest
 
     @Test
     void testGetCitiesInRegionDesc(){
-        ArrayList<City> city = app.getCitiesInRegionDesc();
+        ArrayList<City> city = app.getCitiesInRegionDesc("Eastern Europe");
         app.printCities(city);
     }
     @Test

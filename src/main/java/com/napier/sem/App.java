@@ -78,22 +78,9 @@ public class App
         }else{
             a.connect(args[0], Integer.parseInt(args[1]));
         }
-        ArrayList<Country> country = a.getCountryByRegion("Eastern Europe");
-      //  ArrayList<Country> countryByContinent = a.Top5CountriesInAContinent("5", "Europe");
-      //  ArrayList<City> CitiesByPopulation = a.getCitiesOrderByPopulationDescending();
-        //String N;
-        //System.out.println("How many countries: ");
-        //N = System.in.toString();
-        //ArrayList<Country> country = a.getCountryTopNPop(N);
-      //  System.out.println("Full list of countries (by population Largest to smallest):");
-      //  a.printCountries(country);
-      //  System.out.println("\n top 5 populated European Countries");
-       // a.printCountries(countryByContinent);
-      //  System.out.println("\n Full list of Cities (by population Largest to smallest):");
-        // a.printCities(CitiesByPopulation);
-       // ArrayList<City> cities = a.getCitiesInRegionDesc();
-      //  a.printCities(cities);
-a.printCountries(country);
+
+        ArrayList<City> cities = a.getCitiesInRegionDesc("Eastern Europe");
+        a.printCities(cities);
         // Disconnect from database
         a.disconnect();
 
@@ -101,11 +88,11 @@ a.printCountries(country);
     }
 
     /**
-     * This function returns a list of cities in a certain region (example hardcoded is eastern europe)
+     * This function returns a list of cities in a certain region
      * Ordered by city population descending
      * @return arraylist of cities
      */
-    public ArrayList<City> getCitiesInRegionDesc()
+    public ArrayList<City> getCitiesInRegionDesc(String region)
     {
         try{
             // Create an SQL statement
@@ -114,7 +101,7 @@ a.printCountries(country);
             String strSelect =
                     "SELECT city.ID,country.Region, city.Name,city.CountryCode, city.District,city.Population  "
                             +"FROM city JOIN country ON (city.CountryCode=country.Code) "
-                            +"WHERE region = 'Eastern Europe' "
+                            +"WHERE region = '" + region +"' "
                             +"ORDER BY city.Population desc ";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
