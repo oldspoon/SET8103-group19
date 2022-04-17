@@ -32,7 +32,7 @@ X Requirements of 32 have been implemented, which is X%.
 | 14  | The top N populated cities in a region where N is provided by the user.  |   |   |
 | 15 |  The top N populated cities in a country where N is provided by the user. |   |   |
 | 16  | The top N populated cities in a district where N is provided by the user.  |   |   |
-| 17  | All the capital cities in the world organised by largest population to smallest.  |   |   |
+| 17  | All the capital cities in the world organised by largest population to smallest.  | Yes  |   |
 | 18  | All the capital cities in a continent organised by largest population to smallest.  | Yes  | ![Alt text](https://github.com/oldspoon/SET8103-group19/blob/master/screenshots/18.png)  |
 | 19  | All the capital cities in a region organised by largest to smallest.  |   |   |
 | 20  | The top N populated capital cities in the world where N is provided by the user.  |   |   |
