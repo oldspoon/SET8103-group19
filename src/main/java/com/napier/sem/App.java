@@ -539,8 +539,9 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT city.Name, city.CountryCode, city.Population FROM city JOIN country ON city.CountryCode=country.Code "
-                            +"WHERE country.Capital=city.ID AND country.Continent = 'Europe' "
+                    "SELECT city.Name, city.CountryCode, city.District, city.Population "
+                            +"FROM city JOIN country ON (city.CountryCode = country.Code) "
+                            +"WHERE country.Name='"+country+"'"
                             +"ORDER BY city.Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
