@@ -165,8 +165,8 @@ public class App
         // Report #13, The top N populated cities in a continent where N is provided by the user.
         //
         System.out.println("Report 13:");
-        ArrayList<City> report13; //Needs implemented
-        //a.printCities(report13);
+        ArrayList<City> report13 = a.TopNCitiesInRegion("Caribbean", 3);
+        a.printCities(report13);
         System.out.println();
 
         // Report #14, The top N populated cities in a region where N is provided by the user.
@@ -316,6 +316,41 @@ public class App
                             +"FROM city JOIN country ON (city.CountryCode=country.Code) "
                             +"WHERE region = '" + region +"' "
                             +"ORDER BY city.Population desc ";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityList = new ArrayList<City>();
+            while (rset.next())
+            {
+                City c = new City();
+                c.setName(rset.getString("city.Name"));
+                c.setCountryCode(rset.getString("city.CountryCode"));
+                c.setDistrict(rset.getString("city.District"));
+                c.setPopulation(rset.getInt("city.Population"));
+                cityList.add(c);
+            }
+            return cityList;
+
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public ArrayList<City> TopNCitiesInRegion(String region, int limit)
+    {
+        try{
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Region, city.Name,city.CountryCode, city.District,city.Population  "
+                            +"FROM city JOIN country ON (city.CountryCode=country.Code) "
+                            +"WHERE region = '" + region +"' "
+                            +"ORDER BY city.Population desc "
+                            +"LIMIT " + limit;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
 
