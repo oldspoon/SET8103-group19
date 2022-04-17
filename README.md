@@ -16,11 +16,11 @@ X Requirements of 32 have been implemented, which is X%.
 
 | ID  | Name | Met | Screenshot  |
 |---|---|---|---|
-| 1  | All the countries in the world organised by largest population to smallest.   | Yes  |   |
-| 2  |   |   |   |
-| 3  |   |   |   |
-| 4  |   |   |   |
-| 5 |   |   |   |
+| 1  | All the countries in the world organised by largest population to smallest.   | Yes  | ![Alt text](https://github.com/oldspoon/SET8103-group19/blob/master/screenshots/1.png) |
+| 2  | All the countries in a continent organised by largest population to smallest. (Europe)  | Yes  | ![Alt text](https://github.com/oldspoon/SET8103-group19/blob/master/screenshots/2.png)  |
+| 3  | All the countries in a region organised by largest population to smallest. (Middle East) | Yes  | ![Alt text](https://github.com/oldspoon/SET8103-group19/blob/master/screenshots/3.png)  |
+| 4  | The top N populated countries in the world where N is provided by the user. (5)  | Yes  | ![Alt text](https://github.com/oldspoon/SET8103-group19/blob/master/screenshots/4.png)  |
+| 5 | The top N populated countries in a continent where N is provided by the user. (5, Europe)  | Yes  | ![Alt text](https://github.com/oldspoon/SET8103-group19/blob/master/screenshots/5.png)  |
 | 6  |   |   |   |
 | 7  |   |   |   |
 | 8  |   |   |   |
