@@ -193,8 +193,8 @@ public class App
         // Report #17, All the capital cities in the world organised by largest population to smallest.
         //
         System.out.println("Report 17:");
-        ArrayList<City> report17; //Needs implemented
-        //a.printCapitalCities(report17);
+        ArrayList<City> report17 = a.allCapitalCitiesByPopDESC();
+        a.printCapitalCities(report17);
         System.out.println();
 
         // Report #18, All the capital cities in a continent organised by largest population to smallest.
@@ -470,9 +470,8 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT city.Name, city.CountryCode, city.District, city.Population "
-                            +"FROM city JOIN country ON (city.CountryCode = country.Code) "
-                            +"WHERE country.Name='"+country+"'"
+                    "SELECT city.Name, city.CountryCode, city.Population FROM city JOIN country ON city.CountryCode=country.Code "
+                            +"WHERE country.Capital=city.ID AND country.Continent = 'Europe' "
                             +"ORDER BY city.Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -534,6 +533,38 @@ public class App
         }
     }
 
+    public ArrayList<City> allCapitalCitiesByPopDESC()
+    {
+        try{
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.Name, city.CountryCode, city.Population "
+                            + "FROM city, country "
+                            +"WHERE country.Capital=city.ID "
+                            +"ORDER BY city.Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityList = new ArrayList<City>();
+            while (rset.next())
+            {
+                City c = new City();
+                c.setName(rset.getString("city.Name"));
+                c.setCountryCode(rset.getString("city.CountryCode"));
+                c.setPopulation(rset.getInt("city.Population"));
+                cityList.add(c);
+            }
+            return cityList;
+
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
     /**
      * This is the method used to return an array list of Countries by specified region.
      * Dependant on the SQL used in the method.
