@@ -1,13 +1,11 @@
 package com.napier.sem;
 
-import java.math.BigInteger;
-
 public class Population {
     public String Name;
-    public BigInteger Population;
-    public BigInteger CityPopulation;
+    public long Population;
+    public long CityPopulation;
     public String CityPercentage;
-    public BigInteger NotCityPopulation;
+    public long NotCityPopulation;
     public String NotCityPercentage;
 
     public String getName() {
@@ -18,19 +16,19 @@ public class Population {
         Name = name;
     }
 
-    public BigInteger getPopulation() {
+    public long getPopulation() {
         return Population;
     }
 
-    public void setPopulation(BigInteger population) {
+    public void setPopulation(long population) {
         Population = population;
     }
 
-    public BigInteger getCityPopulation() {
+    public long getCityPopulation() {
         return CityPopulation;
     }
 
-    public void setCityPopulation(BigInteger cityPopulation) {
+    public void setCityPopulation(long cityPopulation) {
         CityPopulation = cityPopulation;
     }
 
@@ -42,11 +40,11 @@ public class Population {
         CityPercentage = cityPercentage;
     }
 
-    public BigInteger getNotCityPopulation() {
+    public long getNotCityPopulation() {
         return NotCityPopulation;
     }
 
-    public void setNotCityPopulation(BigInteger notCityPopulation) {
+    public void setNotCityPopulation(long notCityPopulation) {
         NotCityPopulation = notCityPopulation;
     }
 
