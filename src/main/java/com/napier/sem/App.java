@@ -152,7 +152,7 @@ public class App {
         // Report #12, The top N populated cities in the world where N is provided by the user.
         // Using 15 as example N
         System.out.println("Report 12:");
-        ArrayList<City> report12 = a.TopNCitiesInWorld(12); //Needs implemented
+        ArrayList<City> report12 = a.TopNCitiesInWorld(12);
         a.printCities(report12);
         System.out.println();
 
