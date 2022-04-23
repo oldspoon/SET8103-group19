@@ -213,8 +213,8 @@ public class App {
 
         // Report #21, The top N populated capital cities in a continent where N is provided by the user.
         System.out.println("Report 21:");
-        ArrayList<City> report21;
-        //a.printCapitalCities(report21);
+        ArrayList<City> report21 = a.TopNCapitalCitiesInContinent("Asia", 4);
+        a.printCapitalCities(report21);
         System.out.println();
 
         // Report #22, The top N populated capital cities in a region where N is provided by the user.
@@ -670,6 +670,36 @@ public class App {
                     "SELECT city.Name, city.CountryCode, city.Population FROM city JOIN country ON city.CountryCode=country.Code "
                             + "WHERE country.Capital=city.ID AND country.Continent = 'Europe' "
                             + "ORDER BY city.Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityList = new ArrayList<City>();
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("city.Name"));
+                c.setCountryCode(rset.getString("city.CountryCode"));
+                c.setPopulation(rset.getInt("city.Population"));
+                cityList.add(c);
+            }
+            return cityList;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public ArrayList<City> TopNCapitalCitiesInContinent(String continent, int n) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.Name, city.CountryCode, city.Population FROM city JOIN country ON city.CountryCode=country.Code "
+                            + "WHERE country.Capital=city.ID AND country.Continent = '" + continent + "' "
+                            + "ORDER BY city.Population DESC "
+                            + "LIMIT " + n;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
 
