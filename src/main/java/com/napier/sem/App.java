@@ -152,8 +152,8 @@ public class App {
         // Report #12, The top N populated cities in the world where N is provided by the user.
         // Using 15 as example N
         System.out.println("Report 12:");
-        ArrayList<City> report12; //Needs implemented
-        //a.printCities(report12);
+        ArrayList<City> report12 = a.TopNCitiesByPop(15);
+        a.printCities(report12);
         System.out.println();
 
         // Report #13, The top N populated cities in a continent where N is provided by the user.
@@ -486,6 +486,42 @@ public class App {
                     "SELECT city.Name, city.CountryCode, city.District, city.Population "
                             + "FROM city "
                             + "ORDER BY city.Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityList = new ArrayList<City>();
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("city.Name"));
+                c.setCountryCode(rset.getString("city.CountryCode"));
+                c.setDistrict(rset.getString("city.District"));
+                c.setPopulation(rset.getInt("city.Population"));
+                cityList.add(c);
+            }
+            return cityList;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    /**
+     * This function returns an arraylist of all cities in the world, ordered by population descending
+     *
+     * @return An ArrayList of cities
+     */
+    public ArrayList<City> TopNCitiesByPop(int n) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.Name, city.CountryCode, city.District, city.Population "
+                            + "FROM city "
+                            + "ORDER BY city.Population DESC "
+                            + "LIMIT " + n;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
 
