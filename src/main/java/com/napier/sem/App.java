@@ -173,7 +173,7 @@ public class App {
         // Report #15, The top N populated cities in a country where N is provided by the user.
         //
         System.out.println("Report 15:");
-        ArrayList<City> report15 = a.TopNCitiesInCountry("Spain",5); //Needs implemented
+        ArrayList<City> report15 = a.TopNCitiesInCountry("Spain",5);
         a.printCities(report15);
         System.out.println();
 
