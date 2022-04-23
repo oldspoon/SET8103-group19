@@ -111,7 +111,7 @@ public class App {
         // Report #6, The top N populated countries in a region where N is provided by the user.
         // Using 4 as example N
         System.out.println("Report 6:");
-        ArrayList<Country> report6 = a.TopNCountriesInARegion("7","Eastern Asia");
+        ArrayList<Country> report6 = a.TopNCountriesInARegion("7", "Eastern Asia");
         a.printCountries(report6);
         System.out.println();
 
@@ -122,7 +122,7 @@ public class App {
         System.out.println();
 
         // Report #8, All the cities in a continent organised by largest population to smallest.
-        // Using Oceania as example continent
+        // Using Asia as example continent
         System.out.println("Report 8:");
         ArrayList<City> report8 = a.getCitiesOrderByPopulationDescendingInContinent();
         a.printCities(report8);
@@ -145,15 +145,15 @@ public class App {
         // Report #11, All the cities in a district organised by largest population to smallest.
         // Using X as example district
         System.out.println("Report 11:");
-        ArrayList<City> report11 = a.getCitiesInDistrictByPopDESC ("Zuid-Holland");
+        ArrayList<City> report11 = a.getCitiesInDistrictByPopDESC("Zuid-Holland");
         a.printCities(report11);
         System.out.println();
 
         // Report #12, The top N populated cities in the world where N is provided by the user.
         // Using 15 as example N
         System.out.println("Report 12:");
-        ArrayList<City> report12; //Needs implemented
-        //a.printCities(report12);
+        ArrayList<City> report12 = a.TopNCitiesInWorld(12); //Needs implemented
+        a.printCities(report12);
         System.out.println();
 
         // Report #13, The top N populated cities in a continent where N is provided by the user.
@@ -173,7 +173,7 @@ public class App {
         // Report #15, The top N populated cities in a country where N is provided by the user.
         //
         System.out.println("Report 15:");
-        ArrayList<City> report15 = a.TopNCitiesInCountry("Spain",5);
+        ArrayList<City> report15 = a.TopNCitiesInCountry("Spain", 5);
         a.printCities(report15);
         System.out.println();
 
@@ -201,7 +201,7 @@ public class App {
         // Report #19, All the capital cities in a region organised by largest to smallest.
         //
         System.out.println("Report 19:");
-        ArrayList<City> report19 = a.allCapitalCitiesInRegionByPopDESC("Southern Europe"); // Needs implemented
+        ArrayList<City> report19 = a.allCapitalCitiesInRegionByPopDESC("Southern Europe");
         a.printCapitalCities(report19);
         System.out.println();
 
@@ -213,14 +213,14 @@ public class App {
 
         // Report #21, The top N populated capital cities in a continent where N is provided by the user.
         System.out.println("Report 21:");
-        ArrayList<City> report21;
-        //a.printCapitalCities(report21);
+        ArrayList<City> report21 = a.topNCapitalCitiesInContinent("Oceania", 6);
+        a.printCapitalCities(report21);
         System.out.println();
 
         // Report #22, The top N populated capital cities in a region where N is provided by the user.
         System.out.println("Report 22:");
-        ArrayList<City> report22;
-        //a.printCapitalCities(report22);
+        ArrayList<City> report22 = a.topNCapitalCitiesInRegion("Middle East", 5);
+        a.printCapitalCities(report22);
         System.out.println();
 
         // Report #23, The population of people, people living in cities, and people not living in cities in each continent
@@ -362,6 +362,7 @@ public class App {
             return null;
         }
     }
+
     public ArrayList<City> TopNCitiesInCountry(String country, int limit) {
         try {
             // Create an SQL statement
@@ -373,6 +374,37 @@ public class App {
                             + "WHERE country.Name = '" + country + "' "
                             + "ORDER BY city.Population DESC "
                             + "LIMIT " + limit;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityList = new ArrayList<City>();
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("city.Name"));
+                c.setCountryCode(rset.getString("city.CountryCode"));
+                c.setDistrict(rset.getString("city.District"));
+                c.setPopulation(rset.getInt("city.Population"));
+                cityList.add(c);
+            }
+            return cityList;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public ArrayList<City> TopNCitiesInWorld(int n) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Region, city.Name,city.CountryCode, city.District,city.Population  "
+                            + "FROM city JOIN country ON (city.CountryCode=country.Code) "
+                            + "ORDER BY city.Population desc "
+                            + "LIMIT " + n;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
 
@@ -730,8 +762,68 @@ public class App {
             // Create string for SQL statement
             String strSelect =
                     "SELECT city.Name, city.CountryCode, city.Population FROM city JOIN country ON city.CountryCode=country.Code "
-                            + "WHERE country.Capital=city.ID AND country.Region = '"+ region +"' "
+                            + "WHERE country.Capital=city.ID AND country.Region = '" + region + "' "
                             + "ORDER BY city.Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityList = new ArrayList<City>();
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("city.Name"));
+                c.setCountryCode(rset.getString("city.CountryCode"));
+                c.setPopulation(rset.getInt("city.Population"));
+                cityList.add(c);
+            }
+            return cityList;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public ArrayList<City> topNCapitalCitiesInRegion(String region, int n) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.Name, city.CountryCode, city.Population FROM city JOIN country ON city.CountryCode=country.Code "
+                            + "WHERE country.Capital=city.ID AND country.Region = '" + region + "' "
+                            + " ORDER BY city.Population DESC "
+                            + "LIMIT " + n;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityList = new ArrayList<City>();
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("city.Name"));
+                c.setCountryCode(rset.getString("city.CountryCode"));
+                c.setPopulation(rset.getInt("city.Population"));
+                cityList.add(c);
+            }
+            return cityList;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public ArrayList<City> topNCapitalCitiesInContinent(String continent, int n) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.Name, city.CountryCode, city.Population FROM city JOIN country ON city.CountryCode=country.Code "
+                            + "WHERE country.Capital=city.ID AND country.Continent = '" + continent + "' "
+                            + " ORDER BY city.Population DESC "
+                            + "LIMIT " + n;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
 
@@ -939,6 +1031,7 @@ public class App {
             return null;
         }
     }
+
     /**
      * This function takes in a number N and a string C to list the top N countries in region N
      *
@@ -1007,7 +1100,7 @@ public class App {
         }
     }
 
-    public Population getContinentPopulation(String continent){
+    public Population getContinentPopulation(String continent) {
         try {
             {
                 // Create an SQL statement
@@ -1015,7 +1108,7 @@ public class App {
                 // Create string for SQL statement
                 String strSelect =
                         "Select  SUM(country.Population) as Population FROM country " +
-                                "WHERE country.Continent = '"+continent+"'";
+                                "WHERE country.Continent = '" + continent + "'";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
                 // Extract employee information
@@ -1033,8 +1126,7 @@ public class App {
         }
     }
 
-    public Population getRegionPopulation(String region)
-    {
+    public Population getRegionPopulation(String region) {
         try {
             {
                 // Create an SQL statement
@@ -1042,7 +1134,7 @@ public class App {
                 // Create string for SQL statement
                 String strSelect =
                         "Select  SUM(country.Population) as Population FROM country " +
-                                "WHERE country.Region = '"+region+"'";
+                                "WHERE country.Region = '" + region + "'";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
                 // Extract employee information
@@ -1060,8 +1152,7 @@ public class App {
         }
     }
 
-    public Population getCountryPopulation(String country)
-    {
+    public Population getCountryPopulation(String country) {
         try {
             {
                 // Create an SQL statement
@@ -1069,7 +1160,7 @@ public class App {
                 // Create string for SQL statement
                 String strSelect =
                         "Select  SUM(country.Population) as Population FROM country " +
-                                "WHERE country.Name = '"+country+"'";
+                                "WHERE country.Name = '" + country + "'";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
                 // Extract employee information
@@ -1087,8 +1178,7 @@ public class App {
         }
     }
 
-    public Population getDistrictPopulation(String district)
-    {
+    public Population getDistrictPopulation(String district) {
         try {
             {
                 // Create an SQL statement
@@ -1096,7 +1186,7 @@ public class App {
                 // Create string for SQL statement
                 String strSelect =
                         "Select  SUM(city.Population) as Population FROM city " +
-                                "WHERE city.District = '"+district+"'";
+                                "WHERE city.District = '" + district + "'";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
                 // Extract employee information
@@ -1114,8 +1204,7 @@ public class App {
         }
     }
 
-    public Population getCityPopulation(String city)
-    {
+    public Population getCityPopulation(String city) {
         try {
             {
                 // Create an SQL statement
@@ -1123,7 +1212,7 @@ public class App {
                 // Create string for SQL statement
                 String strSelect =
                         "Select  SUM(city.Population) as Population FROM city " +
-                                "WHERE city.Name = '"+city+"'";
+                                "WHERE city.Name = '" + city + "'";
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
                 // Extract employee information
@@ -1248,34 +1337,32 @@ public class App {
                         pop.getName(), pop.getPopulation());
         System.out.println(pop_string);
     }
-    public void printLanguageReport(ArrayList<CountryLanguage> langList)
-    {
-        if(langList==null)
-        {
+
+    public void printLanguageReport(ArrayList<CountryLanguage> langList) {
+        if (langList == null) {
             System.out.println("List is empty");
             return;
         }
         //Print first row
         System.out.printf("%-30s %-30s %-30s%n", "Language", "Population", "Percentage of world pop");
-        for(CountryLanguage c : langList){
-            if(c==null){
+        for (CountryLanguage c : langList) {
+            if (c == null) {
                 continue;
             }
             String cnt_string =
                     String.format("%-30s %-30s %-30s",
-                            c.Language,c.Population,c.Percentage);
+                            c.Language, c.Population, c.Percentage);
             System.out.println(cnt_string);
         }
     }
 
-    public ArrayList<CountryLanguage> getLanguageReport()
-    {
+    public ArrayList<CountryLanguage> getLanguageReport() {
         try {
             {
                 // Create an SQL statement
                 Statement stmt = con.createStatement();
                 // Create string for SQL statement
-                String strSelect ="SELECT countrylanguage.Language as Language,SUM(country.Population) as Population, ((SUM(country.Population))/((SELECT SUM(Population) FROM country)))*100 as Percentage  "
+                String strSelect = "SELECT countrylanguage.Language as Language,SUM(country.Population) as Population, ((SUM(country.Population))/((SELECT SUM(Population) FROM country)))*100 as Percentage  "
                         + "from country JOIN countrylanguage ON (country.Code=countrylanguage.CountryCode) "
                         + "WHERE (Language = 'Chinese' or language = 'Hindi' or language = 'English' or language ='Spanish' or language = 'Arabic') AND countrylanguage.IsOfficial='T' "
                         + "GROUP BY Language "
@@ -1286,9 +1373,9 @@ public class App {
                 ArrayList<CountryLanguage> langList = new ArrayList<CountryLanguage>();
                 while (rset.next()) {
                     CountryLanguage lang = new CountryLanguage();
-                    lang.Language=rset.getString("Language");
-                    lang.Population=rset.getLong("Population");
-                    lang.Percentage=rset.getString("Percentage");
+                    lang.Language = rset.getString("Language");
+                    lang.Population = rset.getLong("Population");
+                    lang.Percentage = rset.getString("Percentage");
                     langList.add(lang);
                 }
                 return langList;
