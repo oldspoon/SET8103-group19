@@ -180,8 +180,8 @@ public class App {
         // Report #16, The top N populated cities in a district where N is provided by the user.
         //
         System.out.println("Report 16:");
-        ArrayList<City> report16; //Needs implemented
-        //a.printCities(report16);
+        ArrayList<City> report16 = a.TopNCitiesInDistrict("England", 4);
+        a.printCities(report16);
         System.out.println();
 
         // Report #17, All the capital cities in the world organised by largest population to smallest.
@@ -342,6 +342,38 @@ public class App {
                             + "WHERE region = '" + region + "' "
                             + "ORDER BY city.Population desc "
                             + "LIMIT " + limit;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityList = new ArrayList<City>();
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("city.Name"));
+                c.setCountryCode(rset.getString("city.CountryCode"));
+                c.setDistrict(rset.getString("city.District"));
+                c.setPopulation(rset.getInt("city.Population"));
+                cityList.add(c);
+            }
+            return cityList;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public ArrayList<City> TopNCitiesInDistrict(String district, int n) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Region, city.Name,city.CountryCode, city.District,city.Population  "
+                            + "FROM city JOIN country ON (city.CountryCode=country.Code) "
+                            + "WHERE district = '" + district + "' "
+                            + "ORDER BY city.Population desc "
+                            + "LIMIT " + n;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
 
