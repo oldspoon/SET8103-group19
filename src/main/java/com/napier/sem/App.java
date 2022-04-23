@@ -285,8 +285,8 @@ public class App {
         //Spanish.
         //Arabic.
         System.out.println("Report 32:");
-        //
-        //
+        ArrayList<CountryLanguage> report32 = a.getLanguageReport();
+        a.printLanguageReport(report32);
         System.out.println();
 
         a.disconnect();
@@ -1247,6 +1247,57 @@ public class App {
                 String.format("%-30s %-30s",
                         pop.getName(), pop.getPopulation());
         System.out.println(pop_string);
+    }
+    public void printLanguageReport(ArrayList<CountryLanguage> langList)
+    {
+        if(langList==null)
+        {
+            System.out.println("List is empty");
+            return;
+        }
+        //Print first row
+        System.out.printf("%-30s %-30s %-30s%n", "Language", "Population", "Percentage of world pop");
+        for(CountryLanguage c : langList){
+            if(c==null){
+                continue;
+            }
+            String cnt_string =
+                    String.format("%-30s %-30s %-30s",
+                            c.Language,c.Population,c.Percentage);
+            System.out.println(cnt_string);
+        }
+    }
+
+    public ArrayList<CountryLanguage> getLanguageReport()
+    {
+        try {
+            {
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+                // Create string for SQL statement
+                String strSelect ="SELECT countrylanguage.Language as Language,SUM(country.Population) as Population, ((SUM(country.Population))/((SELECT SUM(Population) FROM country)))*100 as Percentage  "
+                        + "from country JOIN countrylanguage ON (country.Code=countrylanguage.CountryCode) "
+                        + "WHERE (Language = 'Chinese' or language = 'Hindi' or language = 'English' or language ='Spanish' or language = 'Arabic') AND countrylanguage.IsOfficial='T' "
+                        + "GROUP BY Language "
+                        + "ORDER BY Population DESC ";
+
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                ArrayList<CountryLanguage> langList = new ArrayList<CountryLanguage>();
+                while (rset.next()) {
+                    CountryLanguage lang = new CountryLanguage();
+                    lang.Language=rset.getString("Language");
+                    lang.Population=rset.getLong("Population");
+                    lang.Percentage=rset.getString("Percentage");
+                    langList.add(lang);
+                }
+                return langList;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
     }
 
     public ArrayList<Population> getTotalContinentData() {

@@ -22,5 +22,10 @@ public class CountryLanguage {
     /**
      * percentage of the population speak it
      */
-    public float Percentage;
+    public String Percentage;
+
+    /**
+     * Population of people speaking language
+     */
+    public long Population;
 }
